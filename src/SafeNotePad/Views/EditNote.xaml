@@ -1,0 +1,84 @@
+﻿<views:EditNoteBase x:Class="SafeNotePad.Views.EditNote"
+                        x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:SafeNotePad.Views"
+        xmlns:password="clr-namespace:SafeNotePad.Views.Password"
+        xmlns:protectionItems="clr-namespace:SafeNotePad.ViewModels.ProtectionItems"
+        xmlns:validation="clr-namespace:SafeNotePad.Views.Validation"
+        Title="Set Password" SizeToContent="WidthAndHeight" Icon="../Views/Images/key-icon_small.png">
+    <views:EditNoteBase.Resources>
+        <Style TargetType="TextBox" x:Key="EmptyTextboxStyle" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+            <Style.Resources>
+                <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                    <VisualBrush.Visual>
+                        <Label Content="(optional)" Padding="10 0 0 0" Foreground="DarkGray" />
+                    </VisualBrush.Visual>
+                </VisualBrush>
+            </Style.Resources>
+            <Style.Triggers>
+                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                </Trigger>
+                <Trigger Property="Text" Value="{x:Null}">
+                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <protectionItems:EditNoteDecryptionConverter x:Key="EditNoteDecryptionConverter"/>
+    </views:EditNoteBase.Resources>
+    <Grid x:Name="LayoutRoot" Width="400">
+        <StackPanel Orientation="Vertical">
+            <Border Background="LemonChiffon" BorderBrush="LightGray" BorderThickness="1" CornerRadius="3" Visibility="{Binding SelectedDecryptionItem.DecryptionType, Converter={StaticResource EditNoteDecryptionConverter}, ConverterParameter=NOTNone}" Margin="7 10" >
+                <StackPanel Orientation="Vertical">
+                    <DockPanel Dock="Top" Background="#EFEFC9" Height="26">
+                        <Image Source="Images\lock-8-32.png" Height="15" Margin="10 0 0 0"></Image>
+                        <TextBlock Text="Enter current password" Visibility="{Binding SelectedDecryptionItem.DecryptionType, Converter={StaticResource EditNoteDecryptionConverter}, ConverterParameter=Password}" VerticalAlignment="Center" FontSize="15" Margin="10 0 0 0" Foreground="#002A5C" FontWeight="SemiBold"></TextBlock>
+                    </DockPanel>
+                    <Grid Margin="10 10 30 10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{Binding ActualHeight, ElementName=txtExistingPassword}"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Password:" FontSize="16" Foreground="Black" Visibility="{Binding SelectedDecryptionItem.DecryptionType, Converter={StaticResource EditNoteDecryptionConverter}, ConverterParameter=Password}"></TextBlock>
+                        <password:BindablePasswordBox Grid.Column="1" Grid.Row="0" Visibility="{Binding SelectedDecryptionItem.DecryptionType, Converter={StaticResource EditNoteDecryptionConverter}, ConverterParameter=Password}" x:Name="txtExistingPassword" Password="{Binding SelectedDecryptionItem.Password, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="25" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+            <GroupBox Header="Select New Password" Padding="10 10 25 10" Margin="7 10 7 0" FontSize="13">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="27"/>
+                        <RowDefinition Height="28"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Password:" Grid.Column="0" Grid.Row="0" Height="30" VerticalAlignment="Center"  Margin="20 3 0 0" HorizontalAlignment="Left" FontSize="16"/>
+                    <password:BindablePasswordBox Grid.Column="1" Grid.Row="0" x:Name="txtPassword" Password="{Binding PasswordProtectionItem.NewPassword, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="25" />
+
+                    <TextBlock Text="Confirm Password:" Grid.Column="0" Grid.Row="1" Height="30" VerticalAlignment="Center" Margin="0 3 10 0" HorizontalAlignment="Right" TextWrapping="Wrap" FontSize="16"/>
+
+                    <password:BindablePasswordBox Grid.Column="1" Grid.Row="1" Password="{Binding PasswordProtectionItem.ConfirmPassword, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Height="25" />
+
+                    <Label Content="Tip:" Grid.Column="0" Grid.Row="2" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15 0 10 0" FontSize="16"/>
+                    <TextBox FontSize="16" Grid.Column="1" Grid.Row="2" Style="{StaticResource EmptyTextboxStyle}" Text="{Binding PasswordProtectionItem.Tip, Mode=TwoWay}" Margin="0 3 0 0" Height="25" VerticalAlignment="Center" ></TextBox>
+                </Grid>
+            </GroupBox>
+            <DockPanel>
+                <validation:ValidationMessage  Margin="15 10 10 10" Error="{Binding DataContext.ValidationSummaryError, ElementName=LayoutRoot}" VerticalAlignment="Center"></validation:ValidationMessage>
+                <Button Content="OK" Command="{Binding OkCommand}" Margin="10" Width="75" HorizontalAlignment="Right" Height="27"/>
+            </DockPanel>
+        </StackPanel>
+    </Grid>
+</views:EditNoteBase>

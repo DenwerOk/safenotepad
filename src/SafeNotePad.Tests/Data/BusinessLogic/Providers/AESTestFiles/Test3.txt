@@ -1,0 +1,31 @@
+﻿10.1. 2012
+- Added MulticastTV recording server format
+
+8.1ё.2011
+Update - Source filter. 
+Fixed - PMT parsing if PAT contains NIT entry.
+Fixed - PSI tables parsing if packet is dropped in the middle of a PSI section.
+Fixed - Playback if first program in a stream doesn't contain video.
+
+
+4.1.2011
+- Fixed - Wrong channel numbering.
+
+15.12.2010
+
+- Update - Source filter
+
+13.12.2010
+
+- Fixed - Crash if MPEG-TS contains service descriptor table (SDT) and channel's name is not in database.
+- Fixed - No playback if stream has unsupported audio type. 
+
+2.12.2010
+
+- Added export and import functions for Simplicity No-PHP playlists.
+
+20.11.2010
+
+- Added TreeView control for easier group managament.
+- Xspf support, including VLC application extension.
+- Playback fix.

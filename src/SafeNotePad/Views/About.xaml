@@ -1,0 +1,25 @@
+﻿<Window x:Class="SafeNotePad.Views.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" Height="282" Width="413" Icon="./Images/Farm-Fresh_note.png" ResizeMode="NoResize" ShowInTaskbar="False">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="45" />
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Image Source="./Images/Farm-Fresh_note.png" Margin="0 10 0 0"></Image>
+        <TextBlock TextAlignment="Center" Grid.Row="1" FontSize="25" FontFamily="Arial" Margin="0 15 0 0">Safe NotePad</TextBlock>
+        <TextBlock x:Name="txtVersion" Grid.Row="2" HorizontalAlignment="Center" FontSize="17" Height="20"></TextBlock>
+        <TextBlock Text="© Anton Kleshchev" Grid.Row="3" HorizontalAlignment="Center" FontSize="17" Height="20"></TextBlock>
+        <TextBlock Grid.Row="4" TextAlignment="Center" FontSize="17">2023</TextBlock>
+        <TextBlock Grid.Row="5" FontSize="17" HorizontalAlignment="Center">
+            <Hyperlink NavigateUri="https://www.safenotepad.com/" RequestNavigate="Hyperlink_OnRequestNavigate">
+                https://www.safenotepad.com/
+            </Hyperlink>
+        </TextBlock>
+    </Grid>
+</Window>

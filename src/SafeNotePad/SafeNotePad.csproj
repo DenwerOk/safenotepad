@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{013C3C2F-4C57-4BD1-80EF-4FD3C7D4F594}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SafeNotePad</RootNamespace>
+    <AssemblyName>SafeNotePad</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>5</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>SafeNotePad.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Views\Images\Farm-Fresh_note.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iesi.Collections">
+      <HintPath>G:\Programming\libraries\NHibernate\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\System.Windows.Controls.Layout.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit">
+      <HintPath>..\packages\WPFToolkit.3.5.50211.1\lib\WPFToolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="BusinessLogic\CryptoProviders\AESCryptoProvider.cs" />
+    <Compile Include="BusinessLogic\CryptoProviders\CryptoHelper.cs" />
+    <Compile Include="BusinessLogic\CryptoProviders\CryptoExtensions.cs" />
+    <Compile Include="BusinessLogic\CryptoProviders\Engine\AESThenHMAC.cs" />
+    <Compile Include="BusinessLogic\CryptoProviders\ICryptoProvider.cs" />
+    <Compile Include="BusinessLogic\CryptoProviders\PBKDF2CryptoProvider.cs" />
+    <Compile Include="BusinessLogic\CryptoProviders\RSACryptoProvider.cs" />
+    <Compile Include="EventArgs.cs" />
+    <Compile Include="Facade\CommandWrapper.cs" />
+    <Compile Include="Facade\ExecuteResult.cs" />
+    <Compile Include="Facade\InvokeResult.cs" />
+    <Compile Include="Facade\LoadResult.cs" />
+    <Compile Include="Facade\ResultBase.cs" />
+    <Compile Include="Facade\SubmitResult.cs" />
+    <Compile Include="Interfaces\Services\IAccessKeyService.cs" />
+    <Compile Include="Interfaces\Services\IDomainService.cs" />
+    <Compile Include="Logging\ConsoleLogger.cs" />
+    <Compile Include="Logging\FileLogger.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="Models\AccessKey.cs" />
+    <Compile Include="Models\AccessKeySummary.cs" />
+    <Compile Include="Models\Crypto\BasicDecryptionData.cs" />
+    <Compile Include="Models\Crypto\PasswordDecryptionData.cs" />
+    <Compile Include="Models\Crypto\PasswordEncryptionData.cs" />
+    <Compile Include="Models\Crypto\IDecryptionData.cs" />
+    <Compile Include="Models\Crypto\IEncryptionData.cs" />
+    <Compile Include="Models\Crypto\SecurityFileDecryptionData.cs" />
+    <Compile Include="Models\Crypto\SecurityFileEncryptionData.cs" />
+    <Compile Include="Models\Enum\EncryptionType.cs" />
+    <Compile Include="Models\Setting.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Services\AccessKeyService.cs" />
+    <Compile Include="Services\DomainService.cs" />
+    <Compile Include="Facade\ServiceContext.cs" />
+    <Compile Include="Services\NoteService.cs" />
+    <Compile Include="Services\ServiceException.cs" />
+    <Compile Include="Models\Session.cs" />
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="Storage\NoteFile.designer.cs" />
+    <Compile Include="Utils\GalaSoft\IExecuteWithObject.cs" />
+    <Compile Include="Utils\GalaSoft\IExecuteWithObjectAndResult.cs" />
+    <Compile Include="Utils\GalaSoft\WeakAction-T-.cs" />
+    <Compile Include="Utils\GalaSoft\WeakAction.cs" />
+    <Compile Include="Utils\GalaSoft\WeakFunc-T, TResult-.cs" />
+    <Compile Include="Utils\GalaSoft\WeakFunc-TResult-.cs" />
+    <Compile Include="Utils\GrayscaleEffect\GrayscaleEffect.cs" />
+    <Compile Include="Utils\Helper.cs" />
+    <Compile Include="Utils\GalaSoft\ObservableObject.cs" />
+    <Compile Include="Utils\PerformanceHelper.cs" />
+    <Compile Include="Utils\GalaSoft\RelayCommand.cs" />
+    <Compile Include="Utils\GalaSoft\RelayCommandGeneric.cs" />
+    <Compile Include="Utils\Settings.cs" />
+    <Compile Include="ViewModels\CryptoDataProviders\DecryptionDataProviders\SecurityFileDecryptionDataProviderViewModel.cs" />
+    <Compile Include="ViewModels\EditorPanelSessionSelection.cs" />
+    <Compile Include="ViewModels\ProtectionItems\EditNoteDecryptionConverter.cs" />
+    <Compile Include="ViewModels\EditorPanelSession.cs" />
+    <Compile Include="ViewModels\EditorPanelSessionManager.cs" />
+    <Compile Include="ViewModels\EditorPanelViewModel.cs" />
+    <Compile Include="ViewModels\IBaseViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\ProtectionItems\BasicDecryptionItem.cs" />
+    <Compile Include="ViewModels\ProtectionItems\BasicProtectionItem.cs" />
+    <Compile Include="ViewModels\ProtectionItems\DecryptionItem.cs" />
+    <Compile Include="ViewModels\ProtectionItems\DecryptionTypeEnum.cs" />
+    <Compile Include="ViewModels\ProtectionItems\PasswordDecryptionItem.cs" />
+    <Compile Include="ViewModels\ProtectionItems\PasswordProtectionItem.cs" />
+    <Compile Include="ViewModels\ProtectionItems\ProtectionItem.cs" />
+    <Compile Include="ViewModels\ProtectionItems\ProtectionTypeEnum.cs" />
+    <Compile Include="ViewModels\EditNoteViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CryptoDataProviders\DecryptionDataProviders\AccessKeyDecryptionDataProviderViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BaseChildWindow.cs" />
+    <Compile Include="Views\BaseUserControl.cs" />
+    <Compile Include="Views\Controls\FocusableAutoCompleteBox.cs" />
+    <Compile Include="Views\Controls\ImageButton.cs" />
+    <Compile Include="Views\Controls\NoteDataGrid.cs" />
+    <Compile Include="Views\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Views\Converters\EnumToBoolConverter.cs" />
+    <Compile Include="ViewModels\CryptoDataProviders\DecryptionDataProviders\IDecryptionDataProvider.cs" />
+    <Compile Include="Views\Converters\GrayScaleConverter.cs" />
+    <Compile Include="Views\Converters\InverseBooleanConverter.cs" />
+    <Compile Include="Views\CryptoDataProviders\DecryptionDataProviders\SecurityFileDecryptionDataProvider.xaml.cs">
+      <DependentUpon>SecurityFileDecryptionDataProvider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DataGridRowExtensions.cs" />
+    <Compile Include="Views\DependencyObjectExtensions.cs" />
+    <Compile Include="Views\DummyViewModels\DummyMainViewModel.cs" />
+    <Compile Include="Views\CryptoDataProviders\DecryptionDataProviders\AccessKeyDecryptionDataProvider.xaml.cs">
+      <DependentUpon>AccessKeyDecryptionDataProvider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CryptoDataProviders\DecryptionDataProviders\DecryptionDataProviderFactory.cs" />
+    <Compile Include="Views\CryptoDataProviders\DecryptionDataProviders\IBaseDecryptionDataProviderChildWIndow.cs" />
+    <Compile Include="Views\EditorPanel.xaml.cs">
+      <DependentUpon>EditorPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IBaseChildWindow.cs" />
+    <Compile Include="Views\IBaseControl.cs" />
+    <Compile Include="Views\IBaseUserControl.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ParentOfTypeExtensions.cs" />
+    <Compile Include="Views\Password\BindablePasswordBox.cs" />
+    <Compile Include="Views\EditNote.xaml.cs">
+      <DependentUpon>EditNote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RichTextEditor\Core\AttachedProperties\RichTextboxAssistant.cs" />
+    <Compile Include="Views\RichTextEditor\Core\Commands\CommandReference.cs" />
+    <Compile Include="Views\RichTextEditor\Core\Commands\DelegateCommand.cs" />
+    <Compile Include="Views\RichTextEditor\Core\Controls\RichTextEditor.xaml.cs">
+      <DependentUpon>RichTextEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlCssParser.cs" />
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlFromXamlConverter.cs" />
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlLexicalAnalyzer.cs" />
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlParser.cs" />
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlSchema.cs" />
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlTokenType.cs" />
+    <Compile Include="Views\RichTextEditor\Core\XamlToHtmlParser\HtmlToXamlConverter.cs" />
+    <Compile Include="Views\RichTextEditor\RichTextEditorViewModel.cs" />
+    <Compile Include="Views\RichTextEditor\RichTextEditorWindow.xaml.cs">
+      <DependentUpon>RichTextEditorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Validation\ValidationMessage.xaml.cs">
+      <DependentUpon>ValidationMessage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Watermark\WatermarkAdorner.cs" />
+    <Compile Include="Views\Watermark\WatermarkService.cs" />
+    <Page Include="Views\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CryptoDataProviders\DecryptionDataProviders\SecurityFileDecryptionDataProvider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CryptoDataProviders\DecryptionDataProviders\AccessKeyDecryptionDataProvider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EditorPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditNote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Views\RichTextEditor\Core\Controls\RichTextEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RichTextEditor\RichTextEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Validation\ValidationMessage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\Note.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\grayscaleeffect.ps" />
+    <None Include="smithhtmleditor.config.xml" />
+    <None Include="Resources\AppIcon.ico" />
+    <Content Include="smithhtmleditor.stylesheet.css" />
+    <Resource Include="Views\Images\arrow_refresh.png" />
+    <Resource Include="Views\Images\shield.png" />
+    <Resource Include="Views\Images\Untitled.png" />
+    <Resource Include="Views\Images\008-doc_edit.png" />
+    <Resource Include="Views\Images\008_1.png" />
+    <Resource Include="Views\Images\008_2.png" />
+    <Resource Include="Views\Images\008_3.png" />
+    <Resource Include="Views\Images\008_3_1.png" />
+    <Resource Include="Views\Images\add-key-icon.png" />
+    <Resource Include="Views\Images\modify-key-icon.png" />
+    <Resource Include="Views\Images\remove-key-icon.png" />
+    <Resource Include="Views\Images\save-key-icon.png" />
+    <Resource Include="Views\Images\Key_lock_locked_password_3-64.png" />
+    <Resource Include="Views\Images\text.png" />
+    <Resource Include="Views\Images\008-doc.png" />
+    <Resource Include="Views\Images\error.png" />
+    <Resource Include="Views\Images\Farm-Fresh_note.png" />
+    <Resource Include="Views\Images\lock-8-32.png" />
+    <Resource Include="Views\Images\shield2.png" />
+    <Resource Include="Views\Images\Gold-shield-260x300.png" />
+    <Resource Include="Views\Images\key-icon.png" />
+    <Resource Include="Views\Images\UntitledPassword.png" />
+    <Resource Include="Views\Images\035-doc_delete1.png" />
+    <None Include="Storage\NoteFile.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Images\Farm-Fresh_note.ico" />
+    <Resource Include="Views\Images\search.png" />
+    <Resource Include="Views\Images\009_1.png" />
+    <Resource Include="Views\Images\010_1.png" />
+    <Resource Include="Views\Images\008-doc_rotated.png" />
+    <Resource Include="Views\Images\UntitledPassword_Small.png" />
+    <Resource Include="Views\Images\key-icon_small.png" />
+    <Resource Include="Views\Images\add_doc_small.png" />
+    <Resource Include="Views\Images\UntitledPassword_sm.png" />
+    <Resource Include="Views\Images\folder-open.png" />
+    <Resource Include="Views\Images\access.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\charactergrowfont.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\charactershrinkfont.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\editcopy.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\editcut.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\editpaste.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\editredo.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\editundo.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\fileopen.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\filesave.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\listbullets.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\listnumbering.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\paragraphcenterjustify.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\paragraphdecreaseindentation.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\paragraphfulljustify.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\paragraphincreaseindentation.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\paragraphleftjustify.png" />
+    <Resource Include="Views\RichTextEditor\Core\Controls\Images\paragraphrightjustify.png" />
+    <Resource Include="Views\Images\008-doc_rotated_modified.png" />
+    <Resource Include="Views\Images\1418598215_DeleteRed.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

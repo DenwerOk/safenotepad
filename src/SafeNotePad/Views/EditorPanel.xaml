@@ -1,0 +1,133 @@
+﻿<views:EditorPanelBase x:Class="SafeNotePad.Views.EditorPanel"
+                       x:ClassModifier="internal"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:views="clr-namespace:SafeNotePad.Views"
+             xmlns:controls="clr-namespace:WpfRichText.Ex.Controls"
+             xmlns:password="clr-namespace:SafeNotePad.Views.Password"
+             xmlns:validation="clr-namespace:SafeNotePad.Views.Validation"
+             xmlns:protectionItems="clr-namespace:SafeNotePad.ViewModels.ProtectionItems"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="1000" x:Name="LayoutRoot">
+    <views:EditorPanelBase.Resources>
+        <protectionItems:EditNoteDecryptionConverter x:Key="EditNoteDecryptionConverter" />
+    </views:EditorPanelBase.Resources>
+    <DockPanel Background="LightGray" >
+        <Grid>
+            <Border Panel.ZIndex="5" BorderBrush="#698DB0" BorderThickness="1" HorizontalAlignment="Center" Visibility="{Binding IsPasswordVisible, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Center" Background="#F9F9F9">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="10" BlurRadius="30" Direction="-22" Color="LightGray"  />
+                </Border.Effect>
+                <Grid Width="330" x:Name="pwdBox">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Row="0" Dock="Top" Grid.ColumnSpan="2" Background="#EFEFC9">
+                        <Image Source="Images\lock-8-32.png" Height="20" Margin="10 0 0 0"></Image>
+                        <TextBlock Text="Enter Password" VerticalAlignment="Center" FontSize="17" Margin="10 0 0 0" Foreground="#002A5C" FontWeight="SemiBold"></TextBlock>
+                    </DockPanel>
+                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" Margin="20 10 20 10" Padding="3 3 3 3" CornerRadius="0" Grid.ColumnSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" Margin="-18 0 0 0" VerticalAlignment="Center" FontSize="14">Password: </TextBlock>
+                            <password:BindablePasswordBox x:Name="txtPassword" Password="{Binding CurrentDecryptionItem.Password, Mode=TwoWay, ValidatesOnDataErrors=True}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15 0 15 0" Height="25" VerticalAlignment="Center"></password:BindablePasswordBox>
+                            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="-18 -6 0 0" FontSize="14">Tip:</TextBlock>
+                            <TextBlock Grid.Row="1" x:Name="tbTip" Grid.Column="1" Visibility="{Binding Session.Note.AccessKey.IsTipExists, Converter={StaticResource BooleanToVisibilityConverter}}" Text="{Binding Session.Note.AccessKey.Tip}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15 2 15 9" FontSize="14" />
+                            <TextBlock Grid.Row="1" x:Name="tbTip2" Grid.Column="1" Visibility="{Binding Session.Note.AccessKey.IsTipExists, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=NOT}" Text=" (none) " VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15 2 15 9" FontSize="14" />
+                        </Grid>
+                    </Border>
+
+                    <DockPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#EAEAEA" Dock="Bottom">
+                        <validation:ValidationMessage HorizontalAlignment="Left" Error="{Binding DataContext.ValidationSummaryError, ElementName=LayoutRoot}" Width="150" Margin="30 0 0 0" VerticalAlignment="Center"></validation:ValidationMessage>
+                        <Button Content="OK" Command="{Binding DataContext.AuthorizeCommand, ElementName=LayoutRoot}" Margin="10 10 20 10" Width="75" HorizontalAlignment="Right" Height="27"/>
+                    </DockPanel>
+                </Grid>
+            </Border>
+            <Border Panel.ZIndex="5" BorderBrush="#698DB0" BorderThickness="1" HorizontalAlignment="Center" Visibility="{Binding IsSecurityFileVisible, Converter={StaticResource BooleanToVisibilityConverter}}" VerticalAlignment="Center" Background="#F9F9F9">
+                <Border.Effect>
+                    <DropShadowEffect ShadowDepth="10" BlurRadius="30" Direction="-22" Color="LightGray"  />
+                </Border.Effect>
+                <Grid Width="330" x:Name="scBox">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <DockPanel Grid.Row="0" Dock="Top" Grid.ColumnSpan="2" Background="#EFEFC9">
+                        <Image Source="Images\lock-8-32.png" Height="20" Margin="10 0 0 0"></Image>
+                        <TextBlock Text="Access by Security File" VerticalAlignment="Center" FontSize="17" Margin="10 0 0 0" Foreground="#002A5C" FontWeight="SemiBold"></TextBlock>
+                    </DockPanel>
+                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="1" Margin="20 10 20 10" Padding="3 3 3 3" CornerRadius="0" Grid.ColumnSpan="2">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="40" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="18 0 0 0">
+                                <TextBlock VerticalAlignment="Center" Margin="0 0 0 0" FontSize="14" Text="Original File Name:   "></TextBlock>
+                                <TextBlock x:Name="tbFileTip" Text="{Binding Session.Note.AccessKey.Tip}" VerticalAlignment="Center" FontSize="14" />
+                            </StackPanel>                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="-18 0 0 0" VerticalAlignment="Center" FontSize="14">File Path:</TextBlock>
+                            <TextBox x:Name="txtSecurityFilePath" Text="{Binding CurrentDecryptionItem.SecurityFilePath, Mode=TwoWay, ValidatesOnDataErrors=True}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="15 0 15 0" Height="25" VerticalAlignment="Center"></TextBox>
+                            <Button Height="24" Width="75" Grid.Row="2" Grid.Column="1" Margin="0 3 16 3" HorizontalAlignment="Right" Command="{Binding CurrentDecryptionItem.BrowseSecurityFile}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="15" Height="15" Source="Images\folder-open.png"></Image>
+                                    <TextBlock Margin="5 0 0 0" VerticalAlignment="Center">Browse</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                    <DockPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#EAEAEA" Dock="Bottom">
+                        <validation:ValidationMessage HorizontalAlignment="Left" Error="{Binding DataContext.ValidationSummaryError, ElementName=LayoutRoot}" Width="150" Margin="30 0 0 0" VerticalAlignment="Center"></validation:ValidationMessage>
+                        <Button Content="OK" Command="{Binding DataContext.AuthorizeCommand, ElementName=LayoutRoot}" Margin="10 10 20 10" Width="75" HorizontalAlignment="Right" Height="27"/>
+                    </DockPanel>
+                </Grid>
+            </Border>
+            <Grid Background="AliceBlue" Name="PanelGrid" Visibility="{Binding Session.IsAuthorized, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding ActualHeight, ElementName=noteProtection}" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Padding="5 5 5 0" Height="45" IsVisibleChanged="UIElement_OnIsVisibleChanged" Visibility="{Binding Session.Note.IsAccessKeyExists, Converter={StaticResource BooleanToVisibilityConverter}}" x:Name="noteProtection" >
+                    <Border Background="#E6F7EE" BorderBrush="LightGray" BorderThickness="1">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Images/shield.png" Width="23" Margin="10 0 0 0"></Image>
+                            <TextBlock Margin="10 -1 0 0" FontSize="16" VerticalAlignment="Center">Note Protection:</TextBlock>
+                            <TextBlock Margin="10 0 0 0" FontSize="14" Width="75"  VerticalAlignment="Center" TextAlignment="Center">
+                                <Hyperlink Command="{Binding SecureCommand}" CommandParameter="{Binding Session.Note}">
+                                    <TextBlock Foreground="Blue" TextAlignment="Center" Text="{Binding Session.Note.AccessKey.ProtectionType}" VerticalAlignment="Center"></TextBlock>
+                                </Hyperlink>
+                            </TextBlock>
+                        </StackPanel>
+                    </Border>
+                </Border>
+                <controls:RichTextEditor x:Name="Editor" Margin="0" Grid.Row="1" Text="{Binding Session.Text, Mode=TwoWay}" Save="Editor_OnSave" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+            </Grid>
+        </Grid>
+    </DockPanel>
+</views:EditorPanelBase>

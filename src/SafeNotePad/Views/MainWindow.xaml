@@ -1,0 +1,87 @@
+﻿<views:MainWindowBase x:Class="SafeNotePad.Views.MainWindow"
+                      x:ClassModifier="internal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:SafeNotePad.Views"
+        xmlns:controls="clr-namespace:SafeNotePad.Views.Controls"
+        xmlns:dummyViewModels="clr-namespace:SafeNotePad.Views.DummyViewModels"
+        Title="Safe NotePad" MinHeight="600" MinWidth="790" Width="780" Height="500" Icon="../Views/Images/Farm-Fresh_note.png">
+    <Window.CommandBindings>
+        <CommandBinding Command="{x:Static views:MainWindow.MyCommand}" Executed="MyCommandExecuted"/>
+    </Window.CommandBindings>
+    <views:MainWindowBase.InputBindings>
+        <KeyBinding Key="F" Modifiers="Control" Command="{Binding ShowSearchBoxCommand}"/>
+    </views:MainWindowBase.InputBindings>
+    <views:MainWindowBase.Resources>
+        <ContextMenu x:Key="NoteContextMenu" DataContext="{Binding PlacementTarget.Tag , RelativeSource={RelativeSource Self}}">
+            <MenuItem Header="Set Protection" Command="{Binding SecureCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.DataContext}">
+                <MenuItem.Icon>
+                    <Image Source="../Views/Images/key-icon_small.png"></Image>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="Close" Command="{Binding CloseNoteCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}, Path=PlacementTarget.DataContext}" />
+        </ContextMenu>
+        <dummyViewModels:DummyMainViewModel x:Key="DummyMainViewModel" />
+        <Style TargetType="TextBlock" x:Key="TextStyle">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+    </views:MainWindowBase.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="37"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.ColumnSpan="2" Background="#8596B6">
+            <MenuItem Header="_File" FontSize="15" Foreground="White">
+                <MenuItem Foreground="Black" Header="New" Command="{Binding NewNoteCommand}"/>
+                <MenuItem Foreground="Black" Header="Open..." Command="{Binding LoadNoteCommand}"/>
+                <MenuItem Foreground="Black" Header="Save" Command="{Binding SaveNoteCommand}"/>
+                <MenuItem Foreground="Black" Header="Save As..." Command="{Binding SaveNoteAsCommand}"/>
+                <Separator />
+                <MenuItem Foreground="Black" Header="About" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderThickness="0" Margin="10 5 10 0" Padding="0" Height="35" Name="NoteListBox" ItemsSource="{Binding NoteList}" SelectedItem="{Binding SelectedNote, Mode=TwoWay}" Grid.Row="1">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                <Border x:Name="bd" Background="#E1E4E8" Padding="6 2 6 3" BorderThickness="1 1 1 0" BorderBrush="#D3D3D3" Margin="2 0 0 0">
+                                    <StackPanel Orientation="Vertical">
+                                        <Rectangle Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" Height="5" Fill="#B2F4B9" Margin="-4 -1 -3 0"></Rectangle>
+                                        <Rectangle Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=NOT, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}}" Height="5" Fill="Transparent" Margin="-4 -1 -3 0"></Rectangle>
+                                        <StackPanel ContextMenu="{StaticResource NoteContextMenu}" Height="18" Orientation="Horizontal" Tag="{Binding DataContext, ElementName=NoteListBox}">
+                                            <TextBlock Text="{Binding Name}" x:Name="lbl" Foreground="Gray"></TextBlock>
+                                            <TextBlock Text="*" Foreground="Red" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}"></TextBlock>
+                                            <Button Margin="5 0 0 0" Padding="0" FontSize="11" Command="{Binding ElementName=NoteListBox, Path=DataContext.CloseNoteCommand}" Height="12" Width="12" VerticalContentAlignment="Center" CommandParameter="{Binding}">
+                                                <Button.Content>
+                                                    <TextBlock Text="x" Margin="0 -4 0 0"></TextBlock>
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="White" TargetName="bd"/>
+                                        <Setter Property="Foreground" Value="Black" TargetName="lbl"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+        <views:EditorPanel Grid.Row="2" Grid.RowSpan="5" Panel.ZIndex="5" SecureCommand="{Binding DataContext.SecureCommand, ElementName=LayoutRoot}" Note="{Binding DataContext.SelectedNote, ElementName=LayoutRoot}"  Visibility="{Binding DataContext.IsEditorPanelVisible, ElementName=LayoutRoot, Converter={StaticResource BooleanToVisibilityConverter}}" Grid.Column="1" Margin="5 -4 5 5" x:Name="Editor" BorderThickness="1" BorderBrush="#A9A9A9" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+        <TextBlock  Grid.Row="2" Grid.RowSpan="5"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">Load or Create a Note</TextBlock>
+    </Grid>
+</views:MainWindowBase>
